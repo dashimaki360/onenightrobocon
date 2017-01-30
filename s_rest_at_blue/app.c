@@ -40,9 +40,10 @@ void main_task(intptr_t unused) {
 
   while(1){
     //色情報の取得
+    int color = ev3_color_sensor_get_color(color_sensor);
 
     //床が青いか判断する
-    if(BLUE == color){
+    if(COLOR_RED == color){
       //モーターの停止
       ev3_motor_steer(left_motor, right_motor, 0, steer);
     }

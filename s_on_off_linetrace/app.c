@@ -32,7 +32,7 @@ void main_task(intptr_t unused) {
 
 
   const int mid_point = 50; //白と黒の閾値
-  const int power = 50;  //モーターパワーj
+  const int power = 30;  //モーターパワーj
   int steer = 0;  //ハンドル操作量
 
 
@@ -42,9 +42,9 @@ void main_task(intptr_t unused) {
 
     //ハンドル操作量決定
     if(reflect_val > mid_point){ //白い
-      steer = 30;
+      steer = 50; //右に曲がる
     }else{  //黒い
-      steer = -30;
+      steer = -50; // 左に曲がる
     }
 
     //モータ操作量をセット

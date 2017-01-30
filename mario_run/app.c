@@ -29,6 +29,7 @@
  */
 const int touch_sensor = EV3_PORT_2, color_sensor = EV3_PORT_3, left_motor = EV3_PORT_B, right_motor = EV3_PORT_C;
 
+#if 0
 static void button_clicked_handler(intptr_t button) {
     switch(button) {
     case BACK_BUTTON:
@@ -38,6 +39,7 @@ static void button_clicked_handler(intptr_t button) {
         break;
     }
 }
+#endif
 
 void main_task(intptr_t unused) {
 
@@ -51,17 +53,23 @@ void main_task(intptr_t unused) {
 
   while(1){
     int reflect_val = ev3_color_sensor_get_reflect(color_sensor);
+    int touch_val = ev3_touch_sensor_is_pressed(touch_sensor);
 
+    //print msg
     char msg[256]= {0};
-    sprintf(msg, "reflect_val %03d", reflect_val);
+    sprintf(msg, "touch_val %03d", touch_val);
     ev3_lcd_draw_string(msg,0,20);
 
-
-    /* 
-    int steer = 30;
+    int steer = 0;
     int power = 50;
+
+    if(touch_val){
+      steer = 50;
+    }else{
+      steer = -50;
+    }
+
     ev3_motor_steer(left_motor, right_motor, power, steer);
-    */
 
 
     tslp_tsk(1); //[ms]

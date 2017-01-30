@@ -31,15 +31,20 @@ void main_task(intptr_t unused) {
   ev3_sensor_config(u_sonic_sensor, ULTRASONIC_SENSOR);
 
 
-  int rot_deg = 360*20; //回転角度　20回転
+  const int rot_deg = 360*10; //回転角度　20回転
   uint32_t power = 50;  //モーターパワー
   bool_t is_block_motor = true;  //回転終了後モータをロックする
-
-  ev3_motor_rotate(left_motor, rot_deg, power, is_block_motor);　//左モータ回転
-  ev3_motor_rotate(right_motor, rot_deg, power, is_block_motor); //右モータ回転
-
+  ev3_motor_reset_counts(left_motor);//モーターの回転角リセット
 
   while(1){
+
+    //指定量モーターが回転したか判定
+    if( rot_deg < ev3_motor_get_counts(left_motor) ){
+      power = 0;
+    }
+    ev3_motor_set_power(left_motor, power);//左モータ回転
+    ev3_motor_set_power(right_motor, power);//右モータ回転
+
     tslp_tsk(1); //スリープ　1[ms]
   }
 

@@ -52,3 +52,6 @@ dkms.conf
 
 #mac finder propatie
 *.DS_Store
+
+# add file
+app
