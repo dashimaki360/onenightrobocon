@@ -97,7 +97,7 @@ app: $(APPLDIR) prepare-obj-folder
 	@cd $(OBJDIR) && \
 	make module_cfg.h && \
 	make -j8 && \
-	cp app $(PWD)/app # && cp app $(PWD)/app-$(subst /,,$(app))
+	cp app $(PWD)/build/$(app)_app # && cp app $(PWD)/app-$(subst /,,$(app))
 
 endif
 
