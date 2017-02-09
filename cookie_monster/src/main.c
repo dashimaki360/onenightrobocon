@@ -1,31 +1,70 @@
+/**
+ * Cookie Monster
+ * One Nught ROBOCON couse test project
+ */
+
 #include "ev3api.h"
 #include "inc/main.h"
+#include "inc/mode_checker.h"
+#include "inc/flat.h"
+#include "inc/bridge.h"
+#include "inc/display.h"
+#include "inc/tonnel.h"
+#include "inc/ball.h"
 
 /**
- * Define the connection ports of the sensors and motors.
- * By default, this application uses the following ports:
+ * ポートの接続対応
  * Touch sensor: Port 2
  * Color sensor: Port 3
- * Left motor:   Port B
+ * USonic sensor: Port 4
+ * Left  motor:  Port B
  * Right motor:  Port C
  */
-const int touch_sensor = EV3_PORT_2, color_sensor = EV3_PORT_3, left_motor = EV3_PORT_B, right_motor = EV3_PORT_C;
+//global ava
+const int touch_sensor = EV3_PORT_2;
+const int color_sensor = EV3_PORT_3;
+const int u_sonic_sensor = EV3_PORT_4;
+const int left_motor = EV3_PORT_B;
+const int right_motor = EV3_PORT_C;
 
-
+//メインタスク
 void main_task(intptr_t unused) {
+  //wait finish initialized
+  FLGPTN flag;
+  wai_flg(INIT_FLG, 0x01, TWF_ANDW, &flag);
 
-  // Configure motors
+  //sensor モーター ポートを設定 
   ev3_motor_config(left_motor, LARGE_MOTOR);
   ev3_motor_config(right_motor, LARGE_MOTOR);
-
-  // Configure sensors
   ev3_sensor_config(touch_sensor, TOUCH_SENSOR);
   ev3_sensor_config(color_sensor, COLOR_SENSOR);
+  ev3_sensor_config(u_sonic_sensor, ULTRASONIC_SENSOR);
 
-  int reflect_val = ev3_color_sensor_get_reflect(color_sensor);
-  char msg[256]= {0};
-  sprintf(msg, "reflect_val %03d", reflect_val);
-  ev3_lcd_draw_string(msg,0,20);
+  Mode mode = START;
+  while(true){
+    mode = mc_get_mode();
+    switch(mode) {
+      case START:
+        break;
+      case FLAT:
+        flat_run();
+        break;
+      case BRIDGR:
+        brg_run();
+        break;
+      case DISPLAY:
+        disp_run();
+        break;
+      case TONNEL:
+        tnl_run();
+        break;
+      case BALL:
+        ball_run();
+        break;
+      default:
+        break;
+    }
+  }
 
   return;
 }

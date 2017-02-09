@@ -1,0 +1,7 @@
+#ifndef DISPLAY_COOKIE_MONSTER
+#define DISPLAY_COOKIE_MONSTER
+
+void  disp_run(void);
+
+#endif //DISPLAY_COOKIE_MONSTER
+
