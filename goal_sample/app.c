@@ -1,6 +1,6 @@
 /**
- * TOPPERS/EV3　サンプル　「壁に衝突しない」
- * 動作説明　　直進して、壁が一定距離以下に近づくと止まる
+ * TOPPERS/EV3　サンプル　「真っすぐ進んで止まる」.
+ * 動作説明　　玉入れ
  */
 
 #include "ev3api.h"
@@ -22,7 +22,6 @@ const int right_motor = EV3_PORT_C;
 
 //メインタスク
 void main_task(intptr_t unused) {
-
   //モーターポートを設定 
   ev3_motor_config(left_motor, LARGE_MOTOR);
   ev3_motor_config(right_motor, LARGE_MOTOR);
@@ -33,32 +32,25 @@ void main_task(intptr_t unused) {
   ev3_sensor_config(u_sonic_sensor, ULTRASONIC_SENSOR);
 
   //変数宣言
-  const int stop_dist = 10; //停止距離[cm]
-  uint32_t power = 50;      //モーターパワー(-100 ~ +100)
-  int steer = 0;            //操舵角(-100 ~ +100)
-  int dist = 0;             //計測距離[cm]
-
+  const int rot_deg = 360*10;         //回転角度[deg](10回転)
+  uint32_t power = 50;                //モーターパワー
+  
+  //モーターの回転角リセット
+  ev3_motor_reset_counts(left_motor); 
+  
   while(1){
-    //距離情報の取得
-    dist = ev3_ultrasonic_sensor_get_distance(u_sonic_sensor);
-    //距離取得エラーの場合無視する
-    if(dist == 0) continue;
-
-    //壁が近いか判断する
-    if(stop_dist > dist){
-      //モーターのパワーを0に
+    
+    //指定量モーターが回転したか判定
+    if( rot_deg < ev3_motor_get_counts(left_motor) ){
       power = 0;
     }
-    //表示
-    char msg[256]= {0};
-    sprintf(msg, "distance_val %03d", dist);
-    ev3_lcd_draw_string(msg,0,20);
 
     //モーターパワー更新
-    ev3_motor_steer(left_motor, right_motor, power, steer);
+    ev3_motor_set_power(left_motor, power);//左モータ回転
+    ev3_motor_set_power(right_motor, power);//右モータ回転
 
     //スリープ　10[ms]
-    tslp_tsk(10); 
+    tslp_tsk(10);
   }
 
   return;
