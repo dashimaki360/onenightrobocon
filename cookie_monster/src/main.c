@@ -12,21 +12,6 @@
 #include "inc/tonnel.h"
 #include "inc/ball.h"
 
-/**
- * ポートの接続対応
- * Touch sensor: Port 2
- * Color sensor: Port 3
- * USonic sensor: Port 4
- * Left  motor:  Port B
- * Right motor:  Port C
- */
-//global ava
-const int touch_sensor = EV3_PORT_2;
-const int color_sensor = EV3_PORT_3;
-const int u_sonic_sensor = EV3_PORT_4;
-const int left_motor = EV3_PORT_B;
-const int right_motor = EV3_PORT_C;
-
 //メインタスク
 void main_task(intptr_t unused) {
   //wait finish initialized
