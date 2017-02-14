@@ -4,7 +4,7 @@
 typedef enum Mode {
   START,
   FLAT,
-  BRIDGR,
+  BRIDGE,
   DISPLAY,
   TONNEL,
   BALL
