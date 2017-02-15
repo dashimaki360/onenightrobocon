@@ -8,6 +8,8 @@
  * Left  motor:  Port B
  * Right motor:  Port C
  */
+
+const int color_sensor = EV3_PORT_1;
 const int touch_sensor = EV3_PORT_2;
 const int line_sensor = EV3_PORT_3;
 const int u_sonic_sensor = EV3_PORT_4;
