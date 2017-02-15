@@ -9,12 +9,12 @@
  * Right motor:  Port C
  */
 
-const int color_sensor = EV3_PORT_1;
-const int touch_sensor = EV3_PORT_2;
-const int line_sensor = EV3_PORT_3;
-const int u_sonic_sensor = EV3_PORT_4;
-const int left_motor = EV3_PORT_B;
-const int right_motor = EV3_PORT_C;
+static const int color_sensor = EV3_PORT_1;
+static const int touch_sensor = EV3_PORT_2;
+static const int line_sensor = EV3_PORT_3;
+static const int u_sonic_sensor = EV3_PORT_4;
+static const int left_motor = EV3_PORT_B;
+static const int right_motor = EV3_PORT_C;
 
 void main_task(intptr_t exinf);
 #endif // MAIN_COOKIE_MONSTER

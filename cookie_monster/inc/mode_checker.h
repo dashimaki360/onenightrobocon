@@ -7,7 +7,8 @@ typedef enum Mode {
   BRIDGE,
   DISPLAY,
   TONNEL,
-  BALL
+  BALL,
+  END
 }Mode;
 
 void  mc_cyc(intptr_t exinf);

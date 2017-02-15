@@ -61,8 +61,8 @@ void main_task(intptr_t unused) {
     ev3_lcd_draw_string("Press the touch sensor mger WHITE.",0,0);
     while(!ev3_touch_sensor_is_pressed(touch_sensor));
     while(ev3_touch_sensor_is_pressed(touch_sensor));
-    //int white = ev3_color_sensor_get_reflect(color_sensor);
-    int white = ev3_color_sensor_get_ambient(color_sensor);
+    int white = ev3_color_sensor_get_reflect(color_sensor);
+    //int white = ev3_color_sensor_get_ambient(color_sensor);
     char msg[256]= {0};
     sprintf(msg, "white %d", white);
     ev3_lcd_draw_string(msg,0,0);
@@ -78,8 +78,8 @@ void main_task(intptr_t unused) {
     ev3_lcd_draw_string("Press the touch sensor mger BLACK.\n",0,20);
     while(!ev3_touch_sensor_is_pressed(touch_sensor));
     while(ev3_touch_sensor_is_pressed(touch_sensor));
-    //int black = ev3_color_sensor_get_reflect(color_sensor);
-    int black = ev3_color_sensor_get_ambient(color_sensor);
+    int black = ev3_color_sensor_get_reflect(color_sensor);
+    //int black = ev3_color_sensor_get_ambient(color_sensor);
     sprintf(msg, "black %d", black);
     ev3_lcd_draw_string(msg,0,20);
 
@@ -87,25 +87,22 @@ void main_task(intptr_t unused) {
      * PID controller
      */
     const float delta_t = 0.001;
-    const float st_p = 1;
+    const float st_p = 2;
     const float st_i = 0;
     const float st_d = 0;
     float lasterror = 0, integral = 0;
     float midpoint = (white - black) / 2 + black;
     while (1) {
-        //float error = midpoint - ev3_color_sensor_get_reflect(color_sensor);
-        float error = midpoint - ev3_color_sensor_get_ambient(color_sensor);
-        error = error*5;
+        float error = midpoint - ev3_color_sensor_get_reflect(color_sensor);
+        //float error = midpoint - ev3_color_sensor_get_ambient(color_sensor);
+        error = error;
         integral += error * delta_t;
         float steer = st_p * error + st_i * integral + st_d * (error - lasterror)/delta_t;
         //debug
         sprintf(msg, "err %4f steer %4f inte %4f", error, steer, integral);
         ev3_lcd_draw_string(msg,0,40);
 
-        if(steer > 100) steer = 100;
-        else if (steer < -100) steer = -100;
-
-        ev3_motor_steer(left_motor, right_motor, 30, steer);
+        ev3_motor_steer(left_motor, right_motor, -40, steer);
         lasterror = error;
         tslp_tsk(1);
     }
