@@ -21,6 +21,7 @@ void main_task(intptr_t unused) {
   //sensor モーター ポートを設定 
   ev3_motor_config(left_motor, LARGE_MOTOR);
   ev3_motor_config(right_motor, LARGE_MOTOR);
+  ev3_motor_config(medium_motor, MEDIUM_MOTOR);
   ev3_sensor_config(touch_sensor, TOUCH_SENSOR);
   ev3_sensor_config(color_sensor, COLOR_SENSOR);
   ev3_sensor_config(u_sonic_sensor, ULTRASONIC_SENSOR);

@@ -13,6 +13,7 @@ static const int color_sensor = EV3_PORT_1;
 static const int touch_sensor = EV3_PORT_2;
 static const int line_sensor = EV3_PORT_3;
 static const int u_sonic_sensor = EV3_PORT_4;
+static const int medium_motor = EV3_PORT_A;
 static const int left_motor = EV3_PORT_B;
 static const int right_motor = EV3_PORT_C;
 
