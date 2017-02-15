@@ -42,3 +42,9 @@ void mc_update_mode(){
   pre_mode = mode;
   
 }
+
+void mc_set_init_mode(Mode set_mode){
+  if(set_mode < 0 || set_mode > END) return;
+  mode = set_mode;
+  return;
+}

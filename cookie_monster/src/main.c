@@ -31,6 +31,8 @@ void main_task(intptr_t unused) {
     mode = mc_get_mode();
     switch(mode) {
       case START:
+        //for debug test
+        ev3_lcd_draw_string("main start mode now",0,40);
         break;
       case FLAT:
         flat_run();

@@ -56,3 +56,6 @@ dkms.conf
 # app file
 app
 *_app
+
+#swap file
+*.swp
