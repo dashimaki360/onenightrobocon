@@ -34,7 +34,7 @@ void main_task(intptr_t unused) {
       case FLAT:
         flat_run();
         break;
-      case BRIDGR:
+      case BRIDGE:
         brg_run();
         break;
       case DISPLAY:
