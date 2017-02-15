@@ -20,8 +20,7 @@ void init_task(intptr_t exinf){
     update_mode();
     update_lcd();
     if( pressed_start_button() ){
-      //TODO
-      //mc_set_init_mode();
+      mc_set_init_mode(mode);
       ev3_lcd_draw_string("start!!",0,40);
       break;
     }
