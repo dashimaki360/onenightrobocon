@@ -1,4 +1,5 @@
 #include "ev3api.h"
+#include "inc/main.h"
 #include "inc/bridge.h"
 
 void brg_run(void){
