@@ -24,6 +24,7 @@ void main_task(intptr_t unused) {
   ev3_motor_config(medium_motor, MEDIUM_MOTOR);
   ev3_sensor_config(touch_sensor, TOUCH_SENSOR);
   ev3_sensor_config(color_sensor, COLOR_SENSOR);
+  ev3_sensor_config(line_sensor, COLOR_SENSOR);
   ev3_sensor_config(u_sonic_sensor, ULTRASONIC_SENSOR);
 
   Mode mode = START;
