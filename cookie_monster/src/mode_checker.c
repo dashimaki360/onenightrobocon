@@ -30,17 +30,17 @@ Mode mc_get_mode(){
 void mc_update_mode(){
   colorid_t color_id = ev3_color_sensor_get_color(color_sensor);
   
-  if(COLOR_RED != color_id && COLOR_RED == pre_color_id){
-     mode +=1;
+  if(COLOR_RED != color_id && COLOR_RED == pre_color_id){		//mode change beyond red line
+  	  mode++;
+  	  if(mode > END) mode = END;
+  	 
   }
-  pre_color_id = color_id;
   
   if(ev3_touch_sensor_is_pressed(touch_sensor)){
-    mode = BALL;
+  	  mode = BALL;
   }
   
-  pre_mode = mode;
-  
+  pre_color_id = color_id;
 }
 
 void mc_set_init_mode(Mode set_mode){

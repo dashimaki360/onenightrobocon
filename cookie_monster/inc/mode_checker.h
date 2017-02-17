@@ -3,10 +3,13 @@
 
 typedef enum Mode {
   START,
-  FLAT,
+  FLAT1,
   BRIDGE,
+  FLAT2,
   DISPLAY,
+  FLAT3,
   TONNEL,
+  FLAT4,
   BALL,
   END
 }Mode;
