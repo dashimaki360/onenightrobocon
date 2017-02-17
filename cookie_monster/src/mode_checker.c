@@ -9,7 +9,7 @@
            
 static Mode mode = START;
 
-static int mode_fix = 0
+static int mode_fix = 0;
 
 static colorid_t pre_color_id = COLOR_WHITE;
 
@@ -51,7 +51,7 @@ void mc_set_init_mode(Mode set_mode){
 }
 
 void mc_set_mode_fix(){
-	mfix = 1;
+	mode_fix = 1;
 }
 
 void mc_release_mode_fix(){
