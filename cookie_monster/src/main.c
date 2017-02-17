@@ -35,7 +35,10 @@ void main_task(intptr_t unused) {
         //for debug test
         ev3_lcd_draw_string("main start mode now",0,40);
         break;
-      case FLAT:
+      case FLAT1:
+      case FLAT2:
+      case FLAT3:
+      case FLAT4:
         flat_run();
         break;
       case BRIDGE:

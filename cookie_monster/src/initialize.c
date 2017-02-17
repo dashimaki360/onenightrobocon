@@ -87,7 +87,10 @@ int update_lcd(void){
     case START:
       sprintf(msg, "MODE: START     ");
       break;
-    case FLAT:
+    case FLAT1:
+    case FLAT2:
+    case FLAT3:
+    case FLAT4:
       sprintf(msg, "MODE: FLAT      ");
       break;
     case BRIDGE:

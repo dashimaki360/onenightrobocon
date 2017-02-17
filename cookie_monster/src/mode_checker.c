@@ -8,7 +8,6 @@
 
            
 static Mode mode = START;
-static Mode pre_mode = START;
 
 static colorid_t pre_color_id = COLOR_WHITE;
 
