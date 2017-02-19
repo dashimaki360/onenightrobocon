@@ -12,7 +12,6 @@
 #include "inc/tonnel.h"
 #include "inc/ball.h"
 
-//メインタスク
 void main_task(intptr_t unused) {
   //wait finish initialized
   FLGPTN flag;

@@ -36,12 +36,11 @@ void lcd_show_menu(Menu mn){
 }
 
 void lcd_show_run_st(Status st){
+  ev3_lcd_fill_rect(0,0,EV3_LCD_WIDTH,EV3_LCD_HEIGHT,EV3_LCD_WHITE);
   w_lcd(st.mode, 0, 1);
   for(int i=0; i<RUN_OPTION_NUM; i++){
     w_lcd(st.option[i], 0, i+4);
   }
-
-  ev3_lcd_draw_string("run status test",0,0);
   return;
 }
 
