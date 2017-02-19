@@ -1,38 +1,98 @@
 #include "ev3api.h"
 #include "inc/initialize.h"
 #include "inc/mode_checker.h"
+#include "inc/lcd.h"
+#include "inc/main.h"
 
 static const int MODE_NUM = END;
 static int bt = -1;
-static int mode = START;
+static Menu mn={
+  .pos=0,
+  .num=4,
+  .title[0]="MODE",
+    .param_pos[0]=0,
+    .param_num[0]=END,
+    .param[0][0]="START",
+    .param[0][1]="FLAT1",
+    .param[0][2]="BRIDGE",
+    .param[0][3]="FLAT2",
+    .param[0][4]="DISPLAY",
+    .param[0][5]="FLAT3",
+    .param[0][6]="TONNEL",
+    .param[0][7]="FLAT4",
+    .param[0][8]="BALL",
+
+  .title[1]="MODE FIX",
+    .param_pos[1]=0,
+    .param_num[1]=2,
+    .param[1][0]="No",
+    .param[1][1]="Yes",
+
+  .title[2]="PARAM SET",
+    .param_pos[2]=0,
+    .param_num[2]=1,
+    .param[2][0]=" ",
+
+  .title[3]="RUN",
+    .param_pos[3]=0,
+    .param_num[3]=1,
+    .param[3][0]=" ",
+};
 
 static int get_pressed_button(void);
-static int update_mode(void);
-static int update_lcd(void);
+static int update_mode();
+static int update_lcd(Menu mn);
 static int pressed_start_button();
 
 void init_task(intptr_t exinf){
+  lcd_set_font_size();
+  lcd_show_boot_logo();
 
-  update_lcd();
+  //sensor モーター ポートを設定 
+  ev3_motor_config(left_motor, LARGE_MOTOR);
+  ev3_motor_config(right_motor, LARGE_MOTOR);
+  ev3_motor_config(medium_motor, MEDIUM_MOTOR);
+  ev3_sensor_config(touch_sensor, TOUCH_SENSOR);
+  ev3_sensor_config(color_sensor, COLOR_SENSOR);
+  ev3_sensor_config(line_sensor, COLOR_SENSOR);
+  ev3_sensor_config(u_sonic_sensor, ULTRASONIC_SENSOR);
+
+  update_lcd(mn);
   //select start mode
   while(true){
     get_pressed_button();
     update_mode();
-    update_lcd();
+    update_lcd(mn);
     if( pressed_start_button() ){
-      mc_set_init_mode(mode);
-      ev3_lcd_draw_string("start!!",0,40);
+      if(3==mn.pos){
+        mc_set_init_mode(mn.param_pos[0]);
+        //TODO
+        //if(mn.param_pos[1]==1){
+        //  mc_set_is_fix_mode(true);
+        //}else
+        //  mc_set_is_fix_mode(false);
+        //}
       break;
+      }
     }
   }
   //change initflag to finish
-
   set_flg(INIT_FLG, 0x01);
-  ev3_lcd_draw_string("finish init",0,60);
+  return;
 }
 
 int get_pressed_button(void){
   while(1){
+    if (ev3_button_is_pressed(LEFT_BUTTON)) {
+      while(ev3_button_is_pressed(LEFT_BUTTON));
+      bt = LEFT_BUTTON;
+      break;
+    }
+    if (ev3_button_is_pressed(RIGHT_BUTTON)) {
+      while(ev3_button_is_pressed(RIGHT_BUTTON));
+      bt = RIGHT_BUTTON;
+      break;
+    }
     if (ev3_button_is_pressed(UP_BUTTON)) {
       while(ev3_button_is_pressed(UP_BUTTON));
       bt = UP_BUTTON;
@@ -56,67 +116,34 @@ int get_pressed_button(void){
   return 0;
 }
 
-int update_mode(void){
+int update_mode(){
   if(bt < 0||bt > TNUM_BUTTON){
     return 1;
   }
 
   switch(bt){
+    case LEFT_BUTTON:
+      mn.param_pos[mn.pos]--;
+      break;
+    case RIGHT_BUTTON:
+      mn.param_pos[mn.pos]++;
+      break;
     case UP_BUTTON:
-      mode++;
+      mn.pos--;
       break;
     case DOWN_BUTTON:
-      mode--;
-      break;
-    case ENTER_BUTTON:
-      break;
-    case BACK_BUTTON:
-      // no use now
+      mn.pos++;
       break;
     default:
       break;
   }
-  mode = (mode+MODE_NUM) % MODE_NUM;
+  mn.pos = (mn.pos+mn.num) % mn.num;
+  mn.param_pos[mn.pos] = (mn.param_pos[mn.pos] + mn.param_num[mn.pos]) % mn.param_num[mn.pos];
   return 0;
 }
 
-int update_lcd(void){
-  char msg[128]= {0};
-
-  switch(mode){
-    case START:
-      sprintf(msg, "MODE: START     ");
-      break;
-    case FLAT1:
-    case FLAT2:
-    case FLAT3:
-    case FLAT4:
-      sprintf(msg, "MODE: FLAT      ");
-      break;
-    case BRIDGE:
-      sprintf(msg, "MODE: BRIDGE    ");
-      break;
-    case DISPLAY:
-      sprintf(msg, "MODE: DISPLAY   ");
-      break;
-    case TONNEL:
-      sprintf(msg, "MODE: TONNEL    ");
-      break;
-    case BALL:
-      sprintf(msg, "MODE: BALL      ");
-      break;
-    case END:
-      //this mode is err
-      sprintf(msg, "MODE: END       ");
-      break;
-    default:
-      //this mode is err
-      sprintf(msg, "MODE: DEFAULT   ");
-      break;
-  }
-  ev3_lcd_draw_string(msg,0,20);
-  sprintf(msg, "%d",mode);
-  ev3_lcd_draw_string(msg,0,40);
+int update_lcd(Menu mn){
+  lcd_show_menu(mn);
   return 0;
 }
 

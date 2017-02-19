@@ -18,26 +18,23 @@ void main_task(intptr_t unused) {
   FLGPTN flag;
   wai_flg(INIT_FLG, 0x01, TWF_ANDW, &flag);
 
-  //sensor モーター ポートを設定 
-  ev3_motor_config(left_motor, LARGE_MOTOR);
-  ev3_motor_config(right_motor, LARGE_MOTOR);
-  ev3_motor_config(medium_motor, MEDIUM_MOTOR);
-  ev3_sensor_config(touch_sensor, TOUCH_SENSOR);
-  ev3_sensor_config(color_sensor, COLOR_SENSOR);
-  ev3_sensor_config(line_sensor, COLOR_SENSOR);
-  ev3_sensor_config(u_sonic_sensor, ULTRASONIC_SENSOR);
-
   Mode mode = START;
   while(true){
     mode = mc_get_mode();
     switch(mode) {
       case START:
         //for debug test
-        ev3_lcd_draw_string("main start mode now",0,40);
+        //ev3_lcd_draw_string("main start mode now",0,40);
         break;
       case FLAT1:
+        flat_run();
+        break;
       case FLAT2:
+        flat_run();
+        break;
       case FLAT3:
+        flat_run();
+        break;
       case FLAT4:
         flat_run();
         break;

@@ -1,4 +1,4 @@
-#include "inc/lib/lcd.h"
+#include "inc/lcd.h"
 #include "ev3api.h"
 
 static const int MN_TITLE_W = 10;
@@ -7,13 +7,13 @@ static const int MN_SPACE = 1;
 static const int MN_CURSOL = 1;
 static const int RUN_OPTION_NUM =3;
 static int font=EV3_FONT_MEDIUM;
-static int font_w=0;
-static int font_h=0;
+static int32_t font_w=0;
+static int32_t font_h=0;
 
-void w_mn_title(Menu);
-void w_mn_cursol(Menu);
-void w_mn_param(Menu);
-void w_lcd(char* str, int x, int y)
+void w_mn_title(const Menu);
+void w_mn_cursol(const Menu);
+void w_mn_param(const Menu);
+void w_lcd(const char* str, int x, int y);
 
 void lcd_set_font_size(void){
 	ev3_lcd_set_font(font);
@@ -27,7 +27,8 @@ void lcd_show_boot_logo(void){
   return;
 }
 
-void lcd_show_init_menu(Menu mn){
+void lcd_show_menu(Menu mn){
+  ev3_lcd_fill_rect(0,0,EV3_LCD_WIDTH,EV3_LCD_HEIGHT,EV3_LCD_WHITE);
   w_mn_cursol(mn);
   w_mn_title(mn);
   w_mn_param(mn);
@@ -45,6 +46,9 @@ void lcd_show_run_st(Status st){
 }
 
 void w_mn_cursol(const Menu mn){
+  for(int i=0; i<mn.num; i++){
+    w_lcd(" ",MN_SPACE,i);
+  }
   w_lcd(">",MN_SPACE,mn.pos);
   return;
 }
@@ -58,12 +62,12 @@ void w_mn_title(const Menu mn){
 
 void w_mn_param(const Menu mn){
   for(int i=0; i<mn.num; i++){
-    w_lcd(mn.param[i],MN_SPACE+MN_CURSOL+MN_TITLE_W+MN_SPACE, i);
+    w_lcd(mn.param[i][mn.param_pos[i]],MN_SPACE+MN_CURSOL+MN_TITLE_W+MN_SPACE, i);
   }
   return;
 }
 
-void w_lcd(char* str, int x, int y){
+void w_lcd(const char* str, int x, int y){
   ev3_lcd_draw_string(str, x*font_w, y*font_h);
   return;
 }
