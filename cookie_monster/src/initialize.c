@@ -66,12 +66,12 @@ void init_task(intptr_t exinf){
     if( pressed_start_button() ){
       if(3==mn.pos){
         mc_set_init_mode(mn.param_pos[0]);
-        //TODO
-        //if(mn.param_pos[1]==1){
-        //  mc_set_is_fix_mode(true);
-        //}else
-        //  mc_set_is_fix_mode(false);
-        //}
+        //set mode fix
+        if(mn.param_pos[1]==1){
+          mc_set_mode_fix();
+        }else{
+          mc_release_mode_fix();
+        }
       break;
       }
     }
