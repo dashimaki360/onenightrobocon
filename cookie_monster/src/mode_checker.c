@@ -6,7 +6,6 @@
 #include "inc/main.h"
 #include "inc/mode_checker.h"
 
-           
 static Mode mode = START;
 
 static int mode_fix = 0;
@@ -29,7 +28,7 @@ Mode mc_get_mode(){
 }
 
 void mc_update_mode(){
-	if (0 == mode_fix) return;
+	if (1 == mode_fix) return;
 	
 	colorid_t color_id = ev3_color_sensor_get_color(color_sensor);
 	
@@ -37,10 +36,11 @@ void mc_update_mode(){
 		mode++;
 		if(mode > END) mode = END;
     }
-    
+   /* 
     if(ev3_touch_sensor_is_pressed(touch_sensor)){
     	mode = BALL;
     }
+    */
     pre_color_id = color_id;
 }
 

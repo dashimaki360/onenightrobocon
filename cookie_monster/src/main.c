@@ -38,7 +38,7 @@ void main_task(intptr_t unused) {
         flat_run();
         break;
       case BRIDGE:
-        brg_run();
+        flat_run();
         break;
       case DISPLAY:
         disp_run();
@@ -52,6 +52,7 @@ void main_task(intptr_t unused) {
       default:
         break;
     }
+    tslp_tsk(50);
   }
 
   return;
