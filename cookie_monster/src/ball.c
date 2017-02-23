@@ -14,6 +14,7 @@ static Status st = {
 
 void ball_run(void){
     if(0 == f_flag){
+        ev3_motor_steer(left_motor, right_motor, 0, 0);
         //display
         sprintf(st.option[0], "Put the ball in the goal");
         lcd_show_run_st(st);
