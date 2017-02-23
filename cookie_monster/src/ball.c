@@ -1,6 +1,7 @@
 #include "ev3api.h"
 #include "inc/main.h"
 #include "inc/ball.h"
+#include "inc/lcd.h"
 
 static int f_flag = 0;
 
