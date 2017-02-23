@@ -2,20 +2,26 @@
 #include "inc/main.h"
 #include "inc/ball.h"
 
-static int f_flag = false;
+static int f_flag = 0;
+
+static Status st = {
+  .mode = "BALL",
+  .option[0] = "foo",
+  .option[1] = "bar",
+  .option[2] = "hoge",
+};
 
 void ball_run(void){
-    if(false == f_flag){
-    	//display
-        char msg[256]= {0};
-        sprintf(msg, "Put the ball in the goal");
-        ev3_lcd_draw_string(msg,0,20);
+    if(0 == f_flag){
+        //display
+        sprintf(st.option[0], "Put the ball in the goal");
+        lcd_show_run_st(st);
 
         //medium motor rotate
         ev3_motor_rotate(medium_motor,rotate_angle,rotate_speed,false);
 
         //if motor stoped before reach rotate_angle, the motor stop
-        int now_count = ev3_motor_get_counts(medium_motor);
+        /*int now_count = ev3_motor_get_counts(medium_motor);
         int pre_count;
         do {
             pre_count = now_count;
@@ -23,8 +29,8 @@ void ball_run(void){
             tslp_tsk(10);
             now_count = ev3_motor_get_counts(medium_motor);
             }while(pre_count != now_count);
-        ev3_motor_set_power(medium_motor,0);
-        f_flag = true;
+        ev3_motor_set_power(medium_motor,0);*/
+        f_flag = 1;
     }
 
 	return;

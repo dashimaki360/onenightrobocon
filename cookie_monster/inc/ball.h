@@ -2,7 +2,7 @@
 #define BALL_COOKIE_MONSTER
 
 //Rotation angle
-static const int rotate_angle = 90;
+static const int rotate_angle = -90;
 //Rotation speed(%)
 static const int rotate_speed = 30;
 
