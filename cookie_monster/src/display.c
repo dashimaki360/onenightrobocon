@@ -11,6 +11,7 @@ static float lasterror = 0, integral = 0;
 static float midpoint = (20 - 0) / 2 + 0;
 static int will_update_lcd = true;
 
+
 static Status st = {
   .mode = "DISPLAY",
   .option[0] = "foo",
@@ -19,18 +20,35 @@ static Status st = {
 };
 
 void disp_run(void){
-	//float error = midpoint - ev3_color_sensor_get_reflect(line_sensor);
-	float error = midpoint - ev3_color_sensor_get_ambient(color_sensor);
-	error = error;
-	integral += error * delta_t;
-	float steer = st_p * error + st_i * integral + st_d * (error - lasterror)/delta_t;
-	//debug
-  sprintf(st.option[0], "error %4f", error);
-  sprintf(st.option[1], "steer %4f", steer);
-  will_update_lcd = true;
+  float color_sensor_point = ev3_color_sensor_get_reflect(color_sensor);
 
-	ev3_motor_steer(left_motor, right_motor, -40, steer);
-	lasterror = error;
+  if(20 > color_sensor_point){
+    float error = midpoint - ev3_color_sensor_get_ambient(line_sensor);
+    error = error;
+    integral += error * delta_t;
+    float steer = st_p * error + st_i * integral + st_d * (error - lasterror)/delta_t;
+    //debug
+    sprintf(st.option[0], "error %4f", error);
+    sprintf(st.option[1], "steer %4f", steer);
+    will_update_lcd = true;
+    ev3_motor_steer(left_motor, right_motor, -40, steer);
+    lasterror = error;
+  }else{
+    float error = midpoint - ev3_color_sensor_get_reflect(line_sensor);
+    error = error;
+    integral += error * delta_t;
+    float steer = st_p * error + st_i * integral + st_d * (error - lasterror)/delta_t;
+    //debug
+    sprintf(st.option[0], "error %4f", error);
+    sprintf(st.option[1], "steer %4f", steer);
+    will_update_lcd = true;
+    ev3_motor_steer(left_motor, right_motor, -40, steer);
+    lasterror = error;
+  }
+
+
+
+
 
 //update lcd
   if(will_update_lcd){
@@ -40,4 +58,29 @@ void disp_run(void){
   return;
 }
 
+/*
+void disp_run(void){
+  float color_sensor_point = ev3_color_sensor_get_reflect(color_sensor)
+
+  
+  //float error = midpoint - ev3_color_sensor_get_reflect(line_sensor);
+  float error = midpoint - ev3_color_sensor_get_ambient(color_sensor);
+  error = error;
+  integral += error * delta_t;
+  float steer = st_p * error + st_i * integral + st_d * (error - lasterror)/delta_t;
+  //debug
+  sprintf(st.option[0], "error %4f", error);
+  sprintf(st.option[1], "steer %4f", steer);
+  will_update_lcd = true;
+
+  ev3_motor_steer(left_motor, right_motor, -40, steer);
+  lasterror = error;
+
+//update lcd
+  if(will_update_lcd){
+    lcd_show_run_st(st);
+    will_update_lcd = false;
+  }
+  return;
+}*/
 
