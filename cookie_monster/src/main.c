@@ -28,23 +28,23 @@ void main_task(intptr_t unused) {
       case FLAT1:
         flat_run();
         break;
-      case FLAT2:
-        flat_run();
-        break;
-      case FLAT3:
-        flat_run();
-        break;
-      case FLAT4:
-        flat_run();
-        break;
       case BRIDGE:
+        flat_run();
+        break;
+      case FLAT2:
         flat_run();
         break;
       case DISPLAY:
         disp_run();
         break;
+      case FLAT3:
+        flat_run();
+        break;
       case TONNEL:
         tnl_run();
+        break;
+      case FLAT4:
+        after_tnl_flat_run();
         break;
       case BALL:
         ball_run();
