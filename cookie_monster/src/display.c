@@ -8,11 +8,7 @@ static void  disp_flat_mode(void);
 
 static const float delta_t = 0.001;
 static float lasterror = 0, integral = 0;
-<<<<<<< HEAD
-static float midpoint_d = (20 - 0) / 2 + 0;
-=======
 static float midpoint_d = (25 - 0) / 2 + 0;
->>>>>>> a20fab98ad2cfaaa26eafd3bab3cb48ff03b3f1d
 static float midpoint_f = (100 - 0) / 2 + 0;
 static int will_update_lcd = true;
 static int mode = false;
@@ -42,11 +38,7 @@ void disp_run(void){
   return;
 }
 void disp_mode(void){
-<<<<<<< HEAD
-  float st_p = 5;  
-=======
   float st_p = 7;  
->>>>>>> a20fab98ad2cfaaa26eafd3bab3cb48ff03b3f1d
   float st_i = 0;
   float st_d = 0;
   float error = midpoint_d - ev3_color_sensor_get_ambient(line_sensor);
