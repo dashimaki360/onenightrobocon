@@ -9,7 +9,7 @@ static void  disp_flat_mode(void);
 static const float delta_t = 0.001;
 static float lasterror = 0, integral = 0;
 //static float midpoint_d = (18 - 2) / 2 + 0;
-static float midpoint_d = 50;
+static float midpoint_d = 14;
 static float midpoint_f = (95 - 25) / 2 + 0;
 static int will_update_lcd = true;
 static int mode = false;
@@ -53,7 +53,7 @@ void disp_mode(void){
   sprintf(st.option[0], "error %4f", error);
   sprintf(st.option[1], "steer %4f", steer);
   will_update_lcd = true;
-  ev3_motor_steer(left_motor, right_motor, -20, steer);
+  ev3_motor_steer(left_motor, right_motor, -15, steer);
   lasterror = error;
 }
 void disp_flat_mode(void){
