@@ -63,7 +63,7 @@ void after_tnl_flat_run(void){
       will_update_lcd = true;
     }else{
     //finding line
-	    ev3_motor_steer(left_motor,right_motor,-40, -30);
+	    ev3_motor_steer(left_motor,right_motor,-30, -45);
       if(reflect < 20){
         is_rotating = true;
       }
