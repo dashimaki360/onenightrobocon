@@ -25,10 +25,10 @@ void tnl_run(void){
   if(is_pressed){
     ev3_motor_set_power(left_motor,0);
     ev3_motor_set_power(right_motor,40);
-    steer = 0;
+    steer = 10;
   }else{
-    if(steer < 30){
-      steer += 2;
+    if(steer < 40){
+      steer += 1;
     }
 	  ev3_motor_steer(left_motor,right_motor,power, steer);
   }
