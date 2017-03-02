@@ -24,7 +24,8 @@ static Status st = {
 
 void disp_run(void){
   float color_sensor_point = ev3_color_sensor_get_reflect(color_sensor);
-  if(20 > color_sensor_point){
+  float line_sensor_point = ev3_color_sensor_get_reflect(line_sensor);
+  if(20 > color_sensor_point || 20 > line_sensor_point){
     disp_mode();
     mode = true;
   }else{
