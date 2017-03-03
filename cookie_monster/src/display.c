@@ -23,14 +23,19 @@ static Status st = {
 };
 
 void disp_run(void){
-  float color_sensor_point = ev3_color_sensor_get_reflect(color_sensor);
-  float line_sensor_point = ev3_color_sensor_get_reflect(line_sensor);
-  if(20 > color_sensor_point || 20 > line_sensor_point){
+  int color_sensor_point = ev3_color_sensor_get_reflect(color_sensor);
+  int line_sensor_point = ev3_color_sensor_get_reflect(line_sensor);
+  if(20 > color_sensor_point && 30 > line_sensor_point){
     disp_mode();
     mode = true;
+    sprintf(st.option[2], "Disp mode %d", line_sensor_point);
+    will_update_lcd = true;
+
   }else{
     disp_flat_mode();
     mode = false;
+    sprintf(st.option[2], "Flat mode %d", line_sensor_point);
+    will_update_lcd = true;
   }
   //update lcd
   if(will_update_lcd){
@@ -69,7 +74,7 @@ void disp_flat_mode(void){
   sprintf(st.option[0], "error %4f", error);
   sprintf(st.option[1], "steer %4f", steer);
   will_update_lcd = true;
-  ev3_motor_steer(left_motor, right_motor, -30, steer);
+  ev3_motor_steer(left_motor, right_motor, -15, steer);
   lasterror = error;
 
 }

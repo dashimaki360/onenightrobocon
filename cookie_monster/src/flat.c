@@ -66,7 +66,7 @@ void fast_flat_run(void){
 void after_tnl_flat_run(void){
   if(is_after_tnl_online){
   //online
-    fast_flat_run();
+    flat_run();
     sprintf(st.option[2], "online");
     will_update_lcd = true;
   }else{
