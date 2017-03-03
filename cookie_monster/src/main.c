@@ -22,23 +22,22 @@ void main_task(intptr_t unused) {
     mode = mc_get_mode();
     switch(mode) {
       case START:
-        //for debug test
-        //ev3_lcd_draw_string("main start mode now",0,40);
+        //fast_flat_run();
         break;
       case FLAT1:
-        flat_run();
+        fast_flat_run();
         break;
       case BRIDGE:
-        flat_run();
+        fast_flat_run();
         break;
       case FLAT2:
-        flat_run();
+        fast_flat_run();
         break;
       case DISPLAY:
         disp_run();
         break;
       case FLAT3:
-        flat_run();
+        fast_flat_run();
         break;
       case TONNEL:
         tnl_run();
@@ -52,7 +51,7 @@ void main_task(intptr_t unused) {
       default:
         break;
     }
-    tslp_tsk(50);
+    tslp_tsk(30);
   }
 
   return;

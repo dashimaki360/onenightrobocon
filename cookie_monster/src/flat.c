@@ -9,7 +9,7 @@ static const float st_i = 0;
 static const float st_d = 0;
 
 static float lasterror = 0, integral = 0;
-static float midpoint = (100 - 0) / 2 + 0;
+static float midpoint = (80 - 7) / 2 + 0;
 static int will_update_lcd = true;
 static int is_after_tnl_online = false;
 static int is_rotating = false;
@@ -24,8 +24,7 @@ static Status st = {
 void flat_run(void){
 	float error = midpoint - ev3_color_sensor_get_reflect(line_sensor);
 	error = error;
-	integral += error * delta_t;
-	float steer = st_p * error + st_i * integral + st_d * (error - lasterror)/delta_t;
+	float steer = st_p * error;// + st_d * (error - lasterror)/delta_t;
 	//debug
   sprintf(st.option[0], "error %4f", error);
   sprintf(st.option[1], "steer %4f", steer);
@@ -46,13 +45,13 @@ void fast_flat_run(void){
   float error = midpoint - ev3_color_sensor_get_reflect(line_sensor);
   error = error;
   integral += error * delta_t;
-  float steer =  error + st_i * integral + 1 * (error - lasterror)/delta_t;
+  float steer =  1 * error + 3 * (error - lasterror);
   //debug
   sprintf(st.option[0], "error %4f", error);
   sprintf(st.option[1], "steer %4f", steer);
   will_update_lcd = true;
 
-  ev3_motor_steer(left_motor, right_motor, -70, steer);
+  ev3_motor_steer(left_motor, right_motor, -80, steer);
   lasterror = error;
 
   //if upsate run status, show it to lcd
@@ -66,7 +65,8 @@ void fast_flat_run(void){
 void after_tnl_flat_run(void){
   if(is_after_tnl_online){
   //online
-    flat_run();
+    //flat_run();
+    fast_flat_run();
     sprintf(st.option[2], "online");
     will_update_lcd = true;
   }else{
@@ -76,7 +76,7 @@ void after_tnl_flat_run(void){
     //roatting
       ev3_motor_set_power(left_motor,20);
       ev3_motor_set_power(right_motor,-20);
-      if(reflect > 65){
+      if(reflect > 75){
         is_rotating = false;
         is_after_tnl_online = true;
       }

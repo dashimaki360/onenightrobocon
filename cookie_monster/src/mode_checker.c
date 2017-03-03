@@ -6,11 +6,14 @@
 #include "inc/main.h"
 #include "inc/mode_checker.h"
 
+static const int TH_RED_CNT = 2;
 static Mode mode = START;
 
 static int mode_fix = 0;
 
-static colorid_t pre_color_id = COLOR_WHITE;
+//static colorid_t pre_color_id = COLOR_WHITE;
+static int  red_cnt = 0;
+static int  past_change_cnt = 0;
 
 //mode check cycle task
 void mc_cyc(intptr_t unused) {
@@ -28,20 +31,29 @@ Mode mc_get_mode(){
 }
 
 void mc_update_mode(){
+  past_change_cnt++;
 	if (1 == mode_fix) return;
+  if (past_change_cnt < 20) return;
 	
 	colorid_t color_id = ev3_color_sensor_get_color(color_sensor);
 	
+  if(COLOR_RED == color_id){
+    red_cnt++;
+  }else{
+    if(red_cnt >= TH_RED_CNT){
+      mode++;
+      past_change_cnt = 0;
+		  if(mode > END) mode = END;
+    }
+    red_cnt = 0;
+  }
+/*
 	if(COLOR_RED != color_id && COLOR_RED == pre_color_id){		//mode change beyond red line
 		mode++;
 		if(mode > END) mode = END;
     }
-   /* 
-    if(ev3_touch_sensor_is_pressed(touch_sensor)){
-    	mode = BALL;
-    }
-    */
     pre_color_id = color_id;
+    */
 }
 
 void mc_set_init_mode(Mode set_mode){

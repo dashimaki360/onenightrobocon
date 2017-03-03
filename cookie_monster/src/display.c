@@ -10,7 +10,7 @@ static const float delta_t = 0.001;
 static float lasterror = 0, integral = 0;
 //static float midpoint_d = (18 - 2) / 2 + 0;
 static float midpoint_d = 14;
-static float midpoint_f = (95 - 25) / 2 + 0;
+static float midpoint_f = (80 - 7) / 2 + 0;
 static int will_update_lcd = true;
 static int mode = false;
 
@@ -78,7 +78,4 @@ void disp_flat_mode(void){
   lasterror = error;
 
 }
-
-
-
 
