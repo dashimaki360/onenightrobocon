@@ -30,7 +30,7 @@ void flat_run(void){
   sprintf(st.option[1], "steer %4f", steer);
   will_update_lcd = true;
 
-	ev3_motor_steer(left_motor, right_motor, -40, steer);
+	ev3_motor_steer(left_motor, right_motor, -50, steer);
 	lasterror = error;
 
   //if upsate run status, show it to lcd
